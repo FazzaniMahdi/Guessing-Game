@@ -10,7 +10,11 @@ const routes = [
     component: HomePage
   },
   {
+<<<<<<< HEAD
     path: "/game",
+=======
+    path: "/game/:nbQuestions",
+>>>>>>> 7421c98 (update on progress, about 75% done)
     name: "guessingGame",
     component: GuessingGameMain
   },
