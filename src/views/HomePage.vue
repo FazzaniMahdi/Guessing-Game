@@ -1,6 +1,15 @@
 <script setup>
 import { ref } from "vue"
+import { useRoute } from "vue-router";
+const route = useRoute()
 const nbQuestions = ref(0)
+const score = ref(0)
+
+if(route.params.score > score.value) {
+  score.value = route.params.score
+}
+  
+
 </script>
 
 <template>
@@ -15,9 +24,9 @@ const nbQuestions = ref(0)
       />
     </div>
 
-    <RouterLink to="/game" :class="['btn btn-block', nbQuestions == 0 ? 'btn-disabled' : '']"class="w-full max-w-3xl text-lg">Play</RouterLink>
+    <RouterLink :to="`/game/${nbQuestions}`" :class="['btn btn-block', nbQuestions == 0 ? 'btn-disabled' : '']"class="w-full max-w-3xl text-lg">Play</RouterLink>
     <div class="text-center text-lg font-medium">
-      <div>High Score: 0</div>
+      <div>High Score: {{ score }}</div>
     </div>
   </div>
 </template>
