@@ -8,6 +8,12 @@ const score = ref(0)
 if(route.params.score > score.value) {
   score.value = route.params.score
 }
+
+function testNegativeNumber() {
+  if(nbQuestions.value < 0) {
+    nbQuestions.value = 0
+  }
+}
   
 
 </script>
@@ -21,6 +27,7 @@ if(route.params.score > score.value) {
         placeholder="Type here"
         v-model="nbQuestions"
         class="input input-bordered w-full"
+        @focusout="testNegativeNumber()"
       />
     </div>
 

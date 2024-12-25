@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import diverseQuestions from "../assets/diverse_questions.json";
+import questionList from "../assets/diverse_questions.json";
 import { useRoute } from 'vue-router';
 const timer = ref(0)
 const route = useRoute()
@@ -12,8 +12,19 @@ const selectedOption = ref(null)
 const quizFinished = ref(false)
 
 const nbQuestions = route.params.nbQuestions
-diverseQuestions.length = nbQuestions
+const diverseQuestions = ref({})
 
+// this is to get a random set of questions according
+// to how many questions the user wants
+let tableIndex = 0
+for(let i=0; i<nbQuestions; i++) {
+    const randomQuestionIndex = Math.floor(Math.random() * 100)
+    diverseQuestions.value[tableIndex] = questionList[randomQuestionIndex];
+    tableIndex++;
+}
+
+
+// this is simply to make sure the counter always does the countdown
 onMounted(() => {
     function nextQuestion() {
         timer.value = 0;
@@ -29,7 +40,7 @@ onMounted(() => {
     function countDown() {
         timer.value++;
         if (timer.value > 10 || selectedOption.value) {
-            if (selectedOption.value === diverseQuestions[currentQuestionIndex.value].question.correctAnswer) {
+            if (selectedOption.value === diverseQuestions.value[currentQuestionIndex.value].question.correctAnswer) {
                 score.value += 50;
                 nbCorrect.value += 1;
             } else {
